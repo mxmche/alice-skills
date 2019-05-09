@@ -2,14 +2,14 @@
 const { json } = require('micro');
 
 // Запуск асинхронного сервиса.
-module.exports = async req => {
+module.exports = async (req, res) => {
 
   // Из запроса извлекаются свойства request, session и version.
   const { request, session, version } = await json(req);
 
   // В тело ответа вставляются свойства version и session из запроса.
   // Подробнее о формате запроса и ответа — в разделе Протокол работы навыка.
-  return {
+  res.end(JSON.stringify({
     version,
     session,
     response: {
@@ -23,5 +23,5 @@ module.exports = async req => {
       // чтобы диалог не завершался.
       end_session: false,
     },
-  };
+  }))
 };
